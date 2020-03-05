@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Homework 1: Substitution-Permutation Network</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="homework-1-substitution-permutation-network">Homework 1: Substitution-Permutation Network</h1>
+<p><strong>Name:</strong> Xuzheng Lu</p>
+<p><strong>GWid:</strong> G34363475</p>
+<hr>
+<h2 id="1-environment-and-programming-language">1. Environment and programming language</h2>
+<p>The algorirhm is written in Python (version = 3.7.4).</p>
+<hr>
+<h2 id="2-format-of-the-input-file">2. Format of the input file</h2>
+<p>The input file takes the format of <code>JSON</code>.</p>
+<p>For better readability, the key and the x (or output) takes hexadecimal as input.</p>
+<pre><code class="language-json"><div>{
+    <span class="hljs-attr">"key"</span>: <span class="hljs-string">"1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c"</span>,
+    <span class="hljs-attr">"s-box"</span>: {
+        <span class="hljs-attr">"00"</span>: <span class="hljs-string">"63"</span>,
+        ...
+        <span class="hljs-attr">"ff"</span>: <span class="hljs-string">"16"</span>
+    }, 
+    <span class="hljs-attr">"permutation function"</span>: [
+        [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+        ...
+        [<span class="hljs-number">31</span>, <span class="hljs-number">31</span>]
+    ],
+    <span class="hljs-attr">"m"</span>: <span class="hljs-number">128</span>,
+    <span class="hljs-attr">"x (or output)"</span>: <span class="hljs-string">"3a4b5c6d8e8e996678785299cbfdecab"</span>,
+    <span class="hljs-attr">"a"</span>: <span class="hljs-number">0</span> 
+}
+</div></code></pre>
+<h4 id="description">Description:</h4>
+<p><strong>&quot;key&quot;:</strong> string, a 72-digit hexadecimal number (36 bytes)</p>
+<p><strong>&quot;s-box&quot;:</strong> dict, the key is the hexadecimal of the 8 bits input number, and the value is the corresponding hexadecimal number of the output</p>
+<p><strong>&quot;permutation function&quot;:</strong> 2D-list, the first element of each term in the list stands for the index of the input, and the second is the index of the output</p>
+<p><strong>&quot;m&quot;:</strong> int, the length of the input in bits, should be a multiple of 32</p>
+<p><strong>&quot;x (or output)&quot;:</strong> string, a hexadecimal number (m bits) of the input or output</p>
+<p><strong>&quot;a&quot;:</strong> int, value 0 indicates encryption, and value 1 indicates decryption</p>
+<hr>
+<h2 id="3-configuration">3. Configuration</h2>
+<p>To set up the algorithm, you can modify the code at the end of the <code>spn.py</code> file as follows.</p>
+<pre><code class="language-python"><div>SPN(file_path=<span class="hljs-string">'input_spn.txt'</span>, n_rounds=<span class="hljs-number">8</span>, save_ouput=<span class="hljs-literal">True</span>).run()
+</div></code></pre>
+<h4 id="arguments">Arguments:</h4>
+<p><strong>file_path</strong>: str, default='input_spn.txt'. The path of the input file</p>
+<p><strong>n_rounds</strong>: int, default=8. The number of rounds of SPN</p>
+<p><strong>save_ouput</strong>: Boolean, default=True. If True, save the result to 'output_spn.txt'</p>
+<hr>
+<h2 id="4-run-the-algorithm">4. Run the algorithm</h2>
+<p>You can run the algorithm by the following command.</p>
+<pre><code><code><div>python spn.py
+</div></code></code></pre>
+<p><strong>Notice: If the default version of Python is 2.x, you should use the following command:</strong></p>
+<pre><code><code><div>python3 spn.py
+</div></code></code></pre>
+<p>The algorithm will load <code>input_spn.txt</code>, and the output will be stored in <code>output_spn.txt</code>.</p>
+<p>The result will also be displayed in the terminal (shell) as follows.</p>
+<pre><code class="language-shell"><div>--------------------------------------------------------------------------------
+Mode        : Encrytion
+Key         : 1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c
+Input text  : 3a4b5c6d8e8e996678785299cbfdecab
+Onput cipher: 4b13ef56dd443a7d052acdb83e1cabcc
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Mode        : Decryption
+Key         : 1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c1a2b3c4d5e6f7a8b9c
+Input cipher: 4b13ef56dd443a7d052acdb83e1cabcc
+Onput text  : 3a4b5c6d8e8e996678785299cbfdecab
+--------------------------------------------------------------------------------
+</div></code></pre>
+
+    </body>
+    </html>
